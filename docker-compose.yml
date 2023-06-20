@@ -1,0 +1,26 @@
+version: '3.8'
+
+services:
+  app:
+    build: .
+    ports:
+      - "6881:6881"
+    depends_on:
+      - mongodb
+    environment:
+      PORT: 6881
+      MONGO_URI: "mongodb://mongodb:27017/tracker"
+    volumes:
+      - .:/usr/src/app
+      - /usr/src/app/node_modules
+
+  mongodb:
+    image: mongo
+    container_name: mongodb
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongo_data:/data/db
+
+volumes:
+  mongo_data:
